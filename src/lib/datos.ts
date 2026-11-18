@@ -40,6 +40,15 @@ export type Envio = {
   diasTransito: number | null;
   sla: "Sí" | "No" | "Pendiente";
   calificacion: number | null;
+  // para la historia
+  mes: string; // YYYY-MM
+  comprometida: string;
+  entrega: string | null;
+  intentos: number;
+  bulto: string;
+  pesoRealKg: number;
+  pesoVolKg: number;
+  flete: number;
 };
 
 type FilaEnvio = {
@@ -58,11 +67,19 @@ type FilaEnvio = {
   dias_transito: number | null;
   cumple_sla: "Sí" | "No" | "Pendiente";
   calificacion: number | null;
+  fecha_comprometida: string;
+  fecha_entrega: string | null;
+  intentos_entrega: number;
+  tipo_bulto: string;
+  peso_real_kg: number;
+  peso_volumetrico_kg: number;
+  flete_neto: number;
 };
 
 const COLUMNAS =
   "emitido_en,canal_venta,tipo_cliente,comuna_destino_id,tipo_entrega,tipo_servicio,contenido_declarado," +
-  "num_bultos,peso_facturable_kg,total_con_iva,estado,motivo_incidencia,dias_transito,cumple_sla,calificacion";
+  "num_bultos,peso_facturable_kg,total_con_iva,estado,motivo_incidencia,dias_transito,cumple_sla,calificacion," +
+  "fecha_comprometida,fecha_entrega,intentos_entrega,tipo_bulto,peso_real_kg,peso_volumetrico_kg,flete_neto";
 const PAGINA = 1000; // máximo de filas por respuesta de la API de Supabase
 
 const enChile = new Intl.DateTimeFormat("en-CA", {
@@ -114,8 +131,17 @@ export async function cargarEnvios(): Promise<Envio[]> {
     if (p.error) throw p.error;
     for (const f of p.data ?? []) {
       const c = comuna.get(f.comuna_destino_id)!;
+      const fc = fechaChile(f.emitido_en);
       filas.push({
-        ...fechaChile(f.emitido_en),
+        ...fc,
+        mes: fc.fecha.slice(0, 7),
+        comprometida: f.fecha_comprometida,
+        entrega: f.fecha_entrega,
+        intentos: f.intentos_entrega,
+        bulto: f.tipo_bulto,
+        pesoRealKg: Number(f.peso_real_kg),
+        pesoVolKg: Number(f.peso_volumetrico_kg),
+        flete: f.flete_neto,
         canal: f.canal_venta,
         tipoCliente: f.tipo_cliente,
         comuna: c.nombre,

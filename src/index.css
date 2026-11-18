@@ -40,6 +40,16 @@
   --critical: #d03b3b;
   --delta-up: #006300;
   --delta-down: #b42323;
+
+  /* Relato */
+  --marca: rgba(57, 135, 229, 0.24);
+  --nota-3: #d6d5cf;
+  /* Divergente azul ↔ rojo con gris al medio (palette.md) */
+  --div-neg-2: #e34948;
+  --div-neg-1: #f2a09f;
+  --div-0: #d6d5cf;
+  --div-pos-1: #86b6ef;
+  --div-pos-2: #2a78d6;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -61,6 +71,9 @@
     --series-4: #c98500;
     --delta-up: #0ca30c;
     --delta-down: #e66767;
+    --marca: rgba(57, 135, 229, 0.38);
+    --nota-3: #5a5953;
+    --div-0: #5a5953;
   }
 }
 :root[data-theme="dark"] {
@@ -81,6 +94,64 @@
   --series-4: #c98500;
   --delta-up: #0ca30c;
   --delta-down: #e66767;
+  --marca: rgba(57, 135, 229, 0.38);
+  --nota-3: #5a5953;
+  --div-0: #5a5953;
+}
+
+/* Capítulo en tinta: siempre oscuro, en ambos modos. */
+.tono-oscuro {
+  color-scheme: dark;
+  --page: #0b0b0b;
+  --surface: #171716;
+  --surface-2: #232321;
+  --ink: #f0efec;
+  --ink-2: #c3c2b7;
+  --muted: #898781;
+  --grid: #2c2c2a;
+  --axis: #45453f;
+  --ring: rgba(255, 255, 255, 0.1);
+  --wash: rgba(255, 255, 255, 0.06);
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --marca: rgba(57, 135, 229, 0.42);
+  --nota-3: #5a5953;
+  --div-0: #5a5953;
+}
+
+/* Control deslizante del simulador */
+.rango {
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--series-1) var(--lleno), var(--wash) var(--lleno));
+  outline: none;
+}
+.rango::-webkit-slider-thumb {
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 2px solid var(--series-1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  cursor: grab;
+}
+.rango::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 2px solid var(--series-1);
+  cursor: grab;
+}
+.rango:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 @theme inline {
