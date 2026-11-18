@@ -1,0 +1,8 @@
+# Datos con información personal: no se suben al repo público
+*.xlsx
+*.csv
+seed/
+.env*
+node_modules/
+.DS_Store
+.claude/settings.local.json
